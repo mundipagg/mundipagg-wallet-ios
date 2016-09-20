@@ -1,0 +1,10 @@
+# Ignore system files
+.DS_Store
+
+# Ignore user data
+Wallet.xcodeproj/project.xcworkspace/xcuserdata/
+Wallet.xcodeproj/xcuserdata/
+Wallet.xcworkspace/xcuserdata/
+
+# Ignore build
+Build
