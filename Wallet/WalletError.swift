@@ -27,6 +27,7 @@ public class WalletError: NSError {
 		} else {
 			return WalletError.APIResponseError
 		}
+        
 		return WalletError(code: response.statusCode, description: description)
 	}
 	

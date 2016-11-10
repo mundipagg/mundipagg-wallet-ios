@@ -27,15 +27,48 @@ class WalletRequestManager: NSObject {
 	func performCallback(_ error: NSError?) {
 		preconditionFailure("Method not implemented")
 	}
-	
-	func requestPrepare() { }
-	
-	func begin() {
-		requestPrepare()
-		let task = urlSession.dataTask(with: request, completionHandler : requestCompletionHandler)
-		task.resume()
-	}
-	
+    
+    func sendRequest(response: @escaping (Dictionary<String, Any>?, NSError?) -> ()) {
+        
+        let session = URLSession.shared
+        
+        let task = session.dataTask(with: request) { (data, urlResponse, error) in
+            
+            if let error = error {
+                let errorCode = (error as NSError).code
+                response(nil, WalletError(code: errorCode, description: error.localizedDescription))
+            }
+            else {
+                if let data = data {
+                    
+                    let httpUrlResponse = urlResponse as! HTTPURLResponse
+                    switch httpUrlResponse.statusCode {
+                        
+                    case 200...299:
+                        do {
+                            let jsonDictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String:Any]
+                            
+                            response(jsonDictionary, nil)
+                        }
+                        catch let error {
+                            let caughtError = error as NSError
+                            response(nil, WalletError(code: caughtError.code, description: caughtError.localizedDescription))
+                        }
+                        
+                    default:
+                        let walletError = WalletError.errorForResponse(httpUrlResponse, data: data)
+                        response(nil, walletError)
+                    }
+                }
+                else {
+                    response(nil, WalletError.APIResponseError)
+                }
+            }
+        }
+        
+        task.resume()
+    }
+    
 	func setAccessToken(_ accessToken: String) {
 		request.setValue("Basic " + accessToken, forHTTPHeaderField: "Authorization")
 	}
@@ -62,8 +95,8 @@ class WalletRequestManager: NSObject {
 
 
 /**
-Represents HTTP methods that could be used.
-*/
+ * Represents HTTP methods that could be used.
+ */
 public enum WalletHTTPMethod: String {
 	/// `GET` graph request HTTP method.
 	case GET = "GET"

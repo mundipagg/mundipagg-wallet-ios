@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-public typealias CardTypeCallback = (Card?, NSError?) -> Void
+public typealias CardTypeCallback = ([Card]?, WalletError?) -> Void
 
 
 public struct Card {
@@ -41,7 +41,6 @@ public struct Card {
 	
 	// Card cilling address
 	public let billingAddress: Address?
-	
 	
 	
 	
@@ -82,7 +81,6 @@ public struct Card {
 				return nil
 		}
 		
-		
 		self.id = id
 		self.gatewayId = gatewayId
 		self.lastFourDigits = lastFourDigits
@@ -94,6 +92,30 @@ public struct Card {
 		self.billingAddress = Address()
 	}
 	
+    public init?(fromDictionary json: Dictionary<String,Any>) {
+        
+        guard let id = json["id"] as? String,
+            let gatewayId = json["gateway_id"] as? String,
+            let lastFourDigits = json["lastFourDigits"] as? String,
+            let brand = json["brand"] as? String,
+            let status = json["status"] as? String,
+            let holderName = json["holderName"] as? String,
+            let createdAt = (json["createdAt"] as? String)?.dateFromISO8601Format,
+            let updatedAt = (json["updatedAt"] as? String)?.dateFromISO8601Format,
+            let billingAddress = json["billingAddress"] as? AnyObject
+            else { return nil }
+        
+        self.id = id
+        self.gatewayId = gatewayId
+        self.lastFourDigits = lastFourDigits
+        self.brand = CardBrand(rawValue: brand)
+        self.status = CardStatus(rawValue: status)
+        self.holderName = holderName
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.billingAddress = Address()
+    }
+    
 }
 
 
@@ -106,50 +128,44 @@ extension Card {
 	
 	public static func fetchCardsWithCustomerId(customerId: String? = nil, completion: @escaping CardTypeCallback){
 		
-		
-		
+            
 		if customerId != nil{
 			WalletAPIClient.setCustomerId(id: customerId)
 		}
 		
-		
-		
-		let request = CardRequest(withURL: WalletAPIClient.getResourceURL(type: APIResources.ListCreditCard), httpMethod: .GET) { (card, error) -> Void in
-				print("CardRequest")
-				print("\(card), \(error)")
-		}
-		
-		request.begin()
-		
-		
-		/*var request = URLRequest(url: WalletAPIClient.getResourceURL(type: APIResources.ListCreditCard) )
-		request.httpMethod = "GET"
-		request.allHTTPHeaderFields = WalletAPIClient.getAuthHeaders()*/
-		
-		
-		
-		/*let session = URLSession.shared
-		let task = session.dataTask(with: request) { (data, response, error) -> Void in
-			
-			let httpResponse = response as! HTTPURLResponse
-			let statusCode = httpResponse.statusCode
-			
-			if statusCode == 200 {
-				
-				print("Everyone is fine")
-				
-				do{
-					let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments)
-					print("\(json)")
-				}catch{
-					print("Error with Json: \(error)")
-				}
-			}else{
-				print("Fail ListCardsWithCustomerId")
-			}
-		}
-		
-		task.resume()*/
+        let request = CardRequest(withURL: WalletAPIClient.getResourceURL(type: APIResources.ListCreditCard), httpMethod: WalletHTTPMethod.GET)
+
+        
+        request.sendRequest { (jsonDictionary, error) in
+            
+            if let error = error {
+                let requestError = WalletError(code: error.code, description: error.localizedDescription)
+                completion(nil, requestError)
+            }
+            else {
+                var cards = [Card]()
+                
+                if let jsonDictionary = jsonDictionary {
+                    
+                    if let cardListDictionary = jsonDictionary["data"] {
+                        
+                        let cardList = cardListDictionary as! [Dictionary<String,Any>]
+                        for cardDictionary in cardList {
+                            if let card = Card(fromDictionary: cardDictionary) {
+                                cards.append(card)
+                            }
+                        }
+                        completion(cards, nil)
+                    }
+                    else {
+                        completion(nil, WalletError.APIResponseError)
+                    }
+                }
+                else {
+                    completion(nil, WalletError.APIResponseError)
+                }
+            }
+        }
 	}
 	
 }
