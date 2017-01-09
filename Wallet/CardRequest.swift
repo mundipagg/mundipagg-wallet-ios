@@ -12,11 +12,25 @@ class CardRequest: WalletRequestManager {
 	
 	//var callback: CardTypeCallback
 	
-	override init(withURL url: URL, httpMethod: WalletHTTPMethod) {
+	override init(withURL url: URL, httpMethod: WalletHTTPMethod, payload: Data?) {
 		//self.callback = callback
-		super.init(withURL: url, httpMethod: httpMethod)
+		super.init(withURL: url, httpMethod: httpMethod, payload: payload)
+		
 		setAccessToken((AccessToken.current?.authorizationToken)!)
+		
 	}
+	
+	
+	/*override func prepareCreateCard() {
+		self.request.httpBody = try? JSONSerialization.data(withJSONObject: postDictionary, options: [])
+	}*/
+	
+	/*func setPayload(with data: Data){
+		
+		self.request.httpBody = data
+		self.request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+	}*/
+	
 	
 //	override func requestDidFinish(_ data: Data, response: HTTPURLResponse) {
 //		guard let account = Card(fromJSON: data) else {

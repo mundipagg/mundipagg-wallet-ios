@@ -11,7 +11,7 @@ import UIKit
 
 
 public typealias CardTypeCallback = ([Card]?, WalletError?) -> Void
-
+public typealias CardTypeCreateCallback = (CreateCardResponse?, WalletError?) -> Void
 
 public struct Card {
 	
@@ -44,7 +44,7 @@ public struct Card {
 	
 	
 	
-	/*public init?(id: String,
+	public init?(id: String,
 	            gatewayId: String? = nil,
 	            lastFourDigits: String? = nil,
 	            brand: CardBrand? = nil,
@@ -62,7 +62,7 @@ public struct Card {
 		self.createdAt = createdAt
 		self.updatedAt = updatedAt
 		self.billingAddress = billingAddress
-	}*/
+	}
 	
 	/*public init?(fromJSON jsonData: Data){
 		
@@ -98,7 +98,6 @@ public struct Card {
 		
 		
 		guard let id = json["id"] as? String,
-			let gatewayId = json["gateway_id"] as? String,
 			let lastFourDigits = json["last_four_digits"] as? String,
 			let brand = json["brand"] as? String,
 			let status = json["status"] as? String,
@@ -109,15 +108,21 @@ public struct Card {
 			return nil
 		}
 		
+		if let gatewayId = json["gateway_id"] as? String {
+			self.gatewayId = gatewayId
+		}else{
+			self.gatewayId = nil
+		}
+		
 		// Optional billing address must be outside guard statement
-		if let billingAddress = json["billing_address"] as? AnyObject {
+		/*if let billingAddress = json["billing_address"] as? AnyObject {
 			print("Good Billing Address", billingAddress)
 		}else{
 			print("Bad Billing Address")
-		}
+		}*/
 		
 		self.id = id
-		self.gatewayId = gatewayId
+		
 		self.lastFourDigits = lastFourDigits
 		self.brand = CardBrand(rawValue: brand)
 		self.status = CardStatus(rawValue: status)
@@ -144,9 +149,9 @@ extension Card {
 			WalletAPIClient.setCustomerId(id: customerId)
 		}
 		
-        let request = CardRequest(withURL: WalletAPIClient.getResourceURL(type: APIResources.ListCreditCard), httpMethod: WalletHTTPMethod.GET)
+		let request = CardRequest(withURL: WalletAPIClient.getResourceURL(type: APIResources.ListCreditCardOrCreate), httpMethod: WalletHTTPMethod.GET, payload: nil)
 
-        
+		
         request.sendRequest { (jsonDictionary, error) in
             
             if let error = error {
@@ -179,6 +184,66 @@ extension Card {
                 }
             }
         }
+	}
+	
+	
+	
+	public static func createNewCard(forCustomerId: String? = nil, payload: [String : Any],  completion: @escaping CardTypeCreateCallback){
+		
+		
+		if forCustomerId != nil{
+			WalletAPIClient.setCustomerId(id: forCustomerId)
+		}
+		
+		
+		
+		do {
+			let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
+			
+			
+			let request = CardRequest(withURL: WalletAPIClient.getResourceURL(type: APIResources.ListCreditCardOrCreate), httpMethod: WalletHTTPMethod.POST, payload: jsonData)
+			
+			debugPrint(jsonData)
+			//debugPrint(request)
+			
+			request.sendRequest { (jsonDictionary, error) in
+				print(jsonDictionary)
+				debugPrint(error)
+				
+				if let error = error {
+					
+					let requestError = WalletError(code: error.code, description: error.localizedDescription)
+					
+					/*if let data = jsonDictionary.data{
+						if let json = try? JSONSerialization.jsonObject(with: data) as! [String:Any] {
+							//errorString = json["error"]
+							
+							completion(nil, json)
+							return
+						}
+					}*/
+					
+					completion(nil, requestError)
+				}
+				else {
+					
+					if let card = CreateCardResponse(fromDictionary: jsonDictionary! as NSDictionary) {
+						completion(card, nil)
+					}else{
+						completion(nil, WalletError.APIResponseError)
+					}
+						
+				}
+			}
+			
+			
+		}
+		catch let parseError {
+			let caughtError = parseError as NSError
+			completion(nil, WalletError(code: caughtError.code, description: caughtError.localizedDescription))
+		}
+			
+			
 	}
 	
 }

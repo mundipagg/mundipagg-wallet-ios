@@ -9,7 +9,7 @@
 import Foundation
 
 public enum APIResources: String {
-	case ListCreditCard
+	case ListCreditCardOrCreate
 }
 
 open class WalletAPIClient: NSObject{
@@ -30,9 +30,11 @@ open class WalletAPIClient: NSObject{
 		
 		
 		switch type {
-		case .ListCreditCard:
+		case .ListCreditCardOrCreate:
 			return URL(string: "https://\(WalletConfiguration.sharedConfiguration.ApiURL)/\(WalletAPIClient.kCustumersURL)/\(WalletAPIClient.getCustomerId())/credit_cards")!
 		}
+		
+		
 		
 	}
 	

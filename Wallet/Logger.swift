@@ -28,7 +28,7 @@ final class Logger {
 		case .none: break
 			
 		case .debug, .verbose, .error:
-			print("[STORMPATH] \(string)")
+			print("[WALLET] \(string)")
 		}
 		
 	}
@@ -36,7 +36,7 @@ final class Logger {
 	class func logRequest(_ request: URLRequest) {
 		
 		if logLevel == .debug || logLevel == .verbose  {
-			print("[STORMPATH] \(request.httpMethod!) \(request.url!.absoluteString)")
+			print("[WALLET] \(request.httpMethod!) \(request.url!.absoluteString)")
 			
 			if logLevel == .verbose {
 				print("\(request.allHTTPHeaderFields!)")
@@ -51,7 +51,7 @@ final class Logger {
 	class func logResponse(_ response: HTTPURLResponse, data: Data?) {
 		
 		if logLevel == .debug || logLevel == .verbose  {
-			print("[STORMPATH] \(response.statusCode) \(response.url!.absoluteString)")
+			print("[WALLET] \(response.statusCode) \(response.url!.absoluteString)")
 			
 			if logLevel == .verbose {
 				print("\(response.allHeaderFields)")
@@ -69,7 +69,7 @@ final class Logger {
 		case .none: break
 			
 		case .debug, .verbose, .error:
-			print("[STORMPATH][ERROR] \(error.code) \(error.localizedDescription)")
+			print("[WALLET][ERROR] \(error.code) \(error.localizedDescription)")
 			print(error.userInfo)
 		}
 		
