@@ -17,6 +17,8 @@ public class WalletError: NSError {
 	static let InternalSDKError = WalletError(code: 0, description: "Internal SDK Error")
 
 	static let APIResponseError = WalletError(code: 1, description: "Unrecognized API Response")
+    
+    static let EmptyCustomerIDError = WalletError(code: 2, description: "Customer Id can't be nil")
 	
 	class func errorForResponse(_ response: HTTPURLResponse, data: Data) -> WalletError {
 		var description = ""
