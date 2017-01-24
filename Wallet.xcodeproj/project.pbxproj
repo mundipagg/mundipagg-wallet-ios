@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11ED3C0E1E3795040037A329 /* DeleteCardResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ED3C0D1E3795040037A329 /* DeleteCardResponse.swift */; };
 		416B9F461D91CA2E00B3E113 /* Wallet.h in Headers */ = {isa = PBXBuildFile; fileRef = 416B9F381D91CA2E00B3E113 /* Wallet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D3383361DBFF89700C57861 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3383351DBFF89700C57861 /* Wallet.swift */; };
 		5D3383BC1DC14BDA00C57861 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3383BB1DC14BDA00C57861 /* Card.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11ED3C0D1E3795040037A329 /* DeleteCardResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteCardResponse.swift; sourceTree = "<group>"; };
 		416B9F351D91CA2E00B3E113 /* Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		416B9F381D91CA2E00B3E113 /* Wallet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wallet.h; sourceTree = "<group>"; };
 		416B9F391D91CA2E00B3E113 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		5D7BF44C1DEFF591009A6D54 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				11ED3C0D1E3795040037A329 /* DeleteCardResponse.swift */,
 				5D7BF44D1DF1F840009A6D54 /* CreateCardRequest.swift */,
 				5DCBADDD1E2001DF000546E8 /* CreateCardResponse.swift */,
 			);
@@ -264,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11ED3C0E1E3795040037A329 /* DeleteCardResponse.swift in Sources */,
 				5D7F47641DC7D8D6006394AF /* WalletRequestManager.swift in Sources */,
 				5D7F47711DC7F56F006394AF /* StringUtils.swift in Sources */,
 				5DCBADDE1E2001DF000546E8 /* CreateCardResponse.swift in Sources */,
