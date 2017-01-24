@@ -10,6 +10,7 @@ import Foundation
 
 public enum APIResources: String {
 	case ListCreditCardOrCreate
+    case DeleteCreditCard
 }
 
 open class WalletAPIClient: NSObject{
@@ -20,11 +21,13 @@ open class WalletAPIClient: NSObject{
 	
 	static private let kCustumersURL = "customers"
 	
+    
 	//MARK: Header constants
 	//static private let kAuthorizationValue = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
 	
 	
 	private static var customerId: String? = nil
+    private static var cardId : String? = nil
 	
 	public static func getResourceURL(type: APIResources) -> URL{
 		
@@ -32,7 +35,11 @@ open class WalletAPIClient: NSObject{
 		switch type {
 		case .ListCreditCardOrCreate:
 			return URL(string: "https://\(WalletConfiguration.sharedConfiguration.ApiURL)/\(WalletAPIClient.kCustumersURL)/\(WalletAPIClient.getCustomerId())/credit_cards")!
-		}
+            
+        case .DeleteCreditCard:
+            return URL(string: "https://\(WalletConfiguration.sharedConfiguration.ApiURL)/\(WalletAPIClient.kCustumersURL)/\(WalletAPIClient.getCustomerId())/credit_cards\(WalletAPIClient.getCardId())")!
+		
+        }
 		
 		
 		
@@ -47,5 +54,12 @@ open class WalletAPIClient: NSObject{
 		return self.customerId!
 	}
 	
+    public static func getCardId() -> String {
+        return self.cardId!
+    }
+    
+    public static func setCardId(id: String) {
+        self.cardId = id
+    }
 	
 }
