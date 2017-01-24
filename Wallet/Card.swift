@@ -12,6 +12,7 @@ import UIKit
 
 public typealias CardTypeCallback = ([Card]?, WalletError?) -> Void
 public typealias CardTypeCreateCallback = (CreateCardResponse?, WalletError?) -> Void
+public typealias CardTypeDeleteCallback = (DeleteCardResponse?, WalletError?) -> Void
 
 public struct Card {
 	
@@ -245,5 +246,35 @@ extension Card {
 			
 			
 	}
-	
+}
+
+//--------------------------------------
+// MARK: - Delete a Card
+//--------------------------------------
+
+extension Card {
+    
+    public static func deleteCard(forCustomerId customerId: String?, withId cardId: String, completion: @escaping CardTypeDeleteCallback) {
+        
+        guard customerId != nil else {
+           return completion(nil, WalletError.EmptyCustomerIDError)
+        }
+        
+        WalletAPIClient.setCustomerId(id: customerId)
+        WalletAPIClient.setCardId(id: cardId)
+        
+        let deleteRequest = CardRequest(withURL: WalletAPIClient.getResourceURL(type: APIResources.DeleteCreditCard), httpMethod: WalletHTTPMethod.DELETE, payload: nil)
+        
+        deleteRequest.sendRequest{(jsonDictionary, error) in
+            
+            if let error = error {
+                let deleteRequestError = WalletError(code: error.code, description: error.localizedDescription)
+                completion(nil, deleteRequestError)
+            }
+            else {
+                
+                
+            }
+        }
+    }
 }
