@@ -27,7 +27,7 @@ open class WalletAPIClient: NSObject{
 	
 	
 	private static var customerId: String? = nil
-    private static var cardId : String? = nil
+    private static var cardId : String = ""
 	
 	public static func getResourceURL(type: APIResources) -> URL{
 		
@@ -37,7 +37,7 @@ open class WalletAPIClient: NSObject{
 			return URL(string: "https://\(WalletConfiguration.sharedConfiguration.ApiURL)/\(WalletAPIClient.kCustumersURL)/\(WalletAPIClient.getCustomerId())/credit_cards")!
             
         case .DeleteCreditCard:
-            return URL(string: "https://\(WalletConfiguration.sharedConfiguration.ApiURL)/\(WalletAPIClient.kCustumersURL)/\(WalletAPIClient.getCustomerId())/credit_cards\(WalletAPIClient.getCardId())")!
+            return URL(string: "https://\(WalletConfiguration.sharedConfiguration.ApiURL)/\(WalletAPIClient.kCustumersURL)/\(WalletAPIClient.getCustomerId())/credit_cards/\(WalletAPIClient.getCardId())")!
 		
         }
 		
@@ -55,7 +55,7 @@ open class WalletAPIClient: NSObject{
 	}
 	
     public static func getCardId() -> String {
-        return self.cardId!
+        return self.cardId
     }
     
     public static func setCardId(id: String) {
