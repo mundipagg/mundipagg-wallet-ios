@@ -234,10 +234,8 @@ extension Card {
 						completion(nil, WalletError.APIResponseError)
 					}
 						
-				}
+            }
 			}
-			
-			
 		}
 		catch let parseError {
 			let caughtError = parseError as NSError
@@ -257,7 +255,7 @@ extension Card {
     public static func deleteCard(forCustomerId customerId: String?, withId cardId: String, completion: @escaping CardTypeDeleteCallback) {
         
         guard customerId != nil else {
-           return completion(nil, WalletError.EmptyCustomerIDError)
+            return completion(nil, WalletError.EmptyCustomerIDError)
         }
         
         WalletAPIClient.setCustomerId(id: customerId)
@@ -266,15 +264,13 @@ extension Card {
         let deleteRequest = CardRequest(withURL: WalletAPIClient.getResourceURL(type: APIResources.DeleteCreditCard), httpMethod: WalletHTTPMethod.DELETE, payload: nil)
         
         deleteRequest.sendRequest{(jsonDictionary, error) in
-            
-            if let error = error {
-                let deleteRequestError = WalletError(code: error.code, description: error.localizedDescription)
-                completion(nil, deleteRequestError)
+            guard error == nil else {
+                return completion(nil, error as? WalletError)
             }
-            else {
-                
-                
+            guard let deleteResponse = DeleteCardResponse.init(from: jsonDictionary!) else {
+                return completion(nil, WalletError.ParseDeleteResponseError)
+            }
+            completion(deleteResponse, nil)
             }
         }
-    }
 }
