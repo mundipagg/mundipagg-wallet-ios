@@ -15,10 +15,11 @@ let WalletErrorDomain = "WalletErrorDomain"
 public class WalletError: NSError {
 
 	static let InternalSDKError = WalletError(code: 0, description: "Internal SDK Error")
-
 	static let APIResponseError = WalletError(code: 1, description: "Unrecognized API Response")
-    
-    static let EmptyCustomerIDError = WalletError(code: 2, description: "Customer Id can't be nil")
+	
+	public static let EmptyCustomerIDError = WalletError(code: 2, description: "Customer Id can't be nil")
+	public static let ParseDeleteResponseError = WalletError(code: 3, description: "Erro ao parsear resposta do deleteCard")
+	public static let NotFoundError = WalletError(code: 404, description: "Objeto nao encontrado")
 	
 	class func errorForResponse(_ response: HTTPURLResponse, data: Data) -> WalletError {
 		var description = ""
@@ -26,7 +27,10 @@ public class WalletError: NSError {
 			description = errorDescription
 		} else if response.statusCode == 401 {
 			description = "Unauthorized"
-		} else {
+		} else if response.statusCode == 404 {
+			return WalletError.NotFoundError
+		}
+		else {
 			return WalletError.APIResponseError
 		}
         
