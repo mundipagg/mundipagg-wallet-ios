@@ -8,10 +8,9 @@ Com essa SDK você poderá:
 
 * Criar cartão
 * Listar cartão
-* Deletar cartão
+* Apagar cartão
 
 ### Carthage
 
-Adicione essa linha ao seu Cartfile github "mundipagg/mundipagg-wallet-ios"
-
-Adicione essa linha $(SRCROOT)/Carthage/Build/iOS/Wallet.framework em Project > Build Phases > Run Script Carthage
+-> Adicione essa linha ao seu Cartfile 'github "mundipagg/mundipagg-wallet-ios"'
+-> Adicione essa linha $(SRCROOT)/Carthage/Build/iOS/Wallet.framework em Project > Build Phases > Run Script Carthage
