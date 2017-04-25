@@ -196,20 +196,12 @@ extension Card {
 			WalletAPIClient.setCustomerId(id: forCustomerId)
 		}
 		
-		
-		
 		do {
 			let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
 			
-			
 			let request = CardRequest(withURL: WalletAPIClient.getResourceURL(type: APIResources.ListCreditCardOrCreate), httpMethod: WalletHTTPMethod.POST, payload: jsonData)
 			
-			debugPrint(jsonData)
-			//debugPrint(request)
-			
 			request.sendRequest { (jsonDictionary, error) in
-				print(jsonDictionary)
-				debugPrint(error)
 				
 				if let error = error {
 					

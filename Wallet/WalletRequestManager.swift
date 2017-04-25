@@ -41,10 +41,6 @@ class WalletRequestManager: NSObject {
 		
 		let task = session.dataTask(with: request) { (data, urlResponse, error) in
 			
-			debugPrint(data)
-			debugPrint(urlResponse)
-			debugPrint(error)
-			
             if let error = error {
 					
 					Logger.logError(error as NSError)
