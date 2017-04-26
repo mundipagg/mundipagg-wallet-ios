@@ -85,6 +85,7 @@ class WalletRequestManager: NSObject {
     }
     
 	func setAccessToken(_ accessToken: String) {
+		print("Bearer " + accessToken)
 		request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
 	}
 	
