@@ -45,7 +45,7 @@ extension AccessToken {
 		get {
 			
 			if(_accessToken == nil){
-				_accessToken = AccessToken.init(authorizationToken: "Basic undefined", expirationDate: Date.distantFuture)
+				_accessToken = AccessToken.init(authorizationToken: "Bearer undefined", expirationDate: Date.distantFuture)
 				return _accessToken
 			}else{
 				return _accessToken
