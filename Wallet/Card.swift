@@ -145,7 +145,6 @@ extension Card {
 	
 	public static func fetchCardsWithCustomerId(customerId: String? = nil, completion: @escaping CardTypeCallback){
 		
-            
 		if customerId != nil{
 			WalletAPIClient.setCustomerId(id: customerId)
 		}
@@ -188,7 +187,6 @@ extension Card {
 	}
 	
 	public static func testFetchCardsWithCustomerId(customerId: String? = nil, completion: @escaping ([Card]?, WalletError?, URLRequest?) -> Void){
-		
 		
 		if customerId != nil{
 			WalletAPIClient.setCustomerId(id: customerId)
