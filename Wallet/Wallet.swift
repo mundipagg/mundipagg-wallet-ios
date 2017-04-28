@@ -10,14 +10,10 @@ import Foundation
 
 
 public final class Wallet {
-	
+	private init() {}
 	/// Singleton representing the primary Wallet instance using the default configuration.
-	//public static var shared = self
+	public static let sharedInstance = Wallet()
 	
 	///Access token to auth with Mundipagg api
-	public static var currentAccessToken: AccessToken?
-	
-	public static var sharedInstance: Wallet = Wallet()
-	
-	private init() {}
+	var currentAccessToken: AccessToken = AccessToken(authorizationToken: "")
 }
