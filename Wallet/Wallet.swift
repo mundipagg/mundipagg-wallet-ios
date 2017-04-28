@@ -15,5 +15,5 @@ public final class Wallet {
 	public static let sharedInstance = Wallet()
 	
 	///Access token to auth with Mundipagg api
-	var currentAccessToken: AccessToken = AccessToken(authorizationToken: "")
+	public var currentAccessToken: AccessToken = AccessToken(authorizationToken: "")
 }
