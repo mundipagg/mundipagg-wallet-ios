@@ -16,8 +16,12 @@ class CardRequest: WalletRequestManager {
 		//self.callback = callback
 		super.init(withURL: url, httpMethod: httpMethod, payload: payload)
 		
-		setAccessToken((AccessToken.current?.authorizationToken)!)
+		guard let accessToken = Wallet.currentAccessToken else {
+			setAccessToken(AccessToken(authorizationToken: "").authorizationToken)
+			return
+		}
 		
+		setAccessToken(accessToken.authorizationToken)
 	}
 	
 	
