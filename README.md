@@ -14,3 +14,4 @@ Com essa SDK você poderá:
 
 -> Adicione essa linha ao seu Cartfile 'github "mundipagg/mundipagg-wallet-ios"'
 -> Adicione essa linha $(SRCROOT)/Carthage/Build/iOS/Wallet.framework em Project > Build Phases > Run Script Carthage
+

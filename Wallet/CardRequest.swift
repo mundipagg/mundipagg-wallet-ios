@@ -16,8 +16,7 @@ class CardRequest: WalletRequestManager {
 		//self.callback = callback
 		super.init(withURL: url, httpMethod: httpMethod, payload: payload)
 		
-		setAccessToken((AccessToken.current?.authorizationToken)!)
-		
+		setAccessToken(Wallet.sharedInstance.currentAccessToken.authorizationToken)
 	}
 	
 	

@@ -9,18 +9,11 @@
 import Foundation
 
 
-public final class Wallet: WalletAPIClient {
-	
+public final class Wallet {
+	private init() {}
 	/// Singleton representing the primary Wallet instance using the default configuration.
-	public static let shared = Wallet()
+	public static let sharedInstance = Wallet()
 	
-	public override init() {
-		super.init()
-		print("Class has been initialised")
-		
-	}
-	
-	public func doSomething(){
-		print("Yeah, it works")
-	}
+	///Access token to auth with Mundipagg api
+	public var currentAccessToken: AccessToken = AccessToken(authorizationToken: "")
 }

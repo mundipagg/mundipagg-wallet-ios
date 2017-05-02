@@ -145,7 +145,6 @@ extension Card {
 	
 	public static func fetchCardsWithCustomerId(customerId: String? = nil, completion: @escaping CardTypeCallback){
 		
-            
 		if customerId != nil{
 			WalletAPIClient.setCustomerId(id: customerId)
 		}
@@ -156,8 +155,8 @@ extension Card {
         request.sendRequest { (jsonDictionary, error) in
             
             if let error = error {
-                let requestError = WalletError(code: error.code, description: error.localizedDescription)
-                completion(nil, requestError)
+					let requestError = WalletError(code: error.code, description: error.localizedDescription)
+               completion(nil, requestError)
             }
             else {
                 var cards = [Card]()
@@ -187,8 +186,6 @@ extension Card {
         }
 	}
 	
-	
-	
 	public static func createNewCard(forCustomerId: String? = nil, payload: [String : Any],  completion: @escaping CardTypeCreateCallback){
 		
 		
@@ -196,20 +193,12 @@ extension Card {
 			WalletAPIClient.setCustomerId(id: forCustomerId)
 		}
 		
-		
-		
 		do {
 			let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
 			
-			
 			let request = CardRequest(withURL: WalletAPIClient.getResourceURL(type: APIResources.ListCreditCardOrCreate), httpMethod: WalletHTTPMethod.POST, payload: jsonData)
 			
-			debugPrint(jsonData)
-			//debugPrint(request)
-			
 			request.sendRequest { (jsonDictionary, error) in
-				print(jsonDictionary)
-				debugPrint(error)
 				
 				if let error = error {
 					

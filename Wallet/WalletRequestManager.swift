@@ -41,10 +41,6 @@ class WalletRequestManager: NSObject {
 		
 		let task = session.dataTask(with: request) { (data, urlResponse, error) in
 			
-			debugPrint(data)
-			debugPrint(urlResponse)
-			debugPrint(error)
-			
             if let error = error {
 					
 					Logger.logError(error as NSError)
@@ -89,7 +85,7 @@ class WalletRequestManager: NSObject {
     }
     
 	func setAccessToken(_ accessToken: String) {
-		request.setValue("Basic " + accessToken, forHTTPHeaderField: "Authorization")
+		request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
 	}
 	
 	//func prepareForRequest() {}

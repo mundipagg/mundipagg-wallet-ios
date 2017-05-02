@@ -37,25 +37,23 @@ public struct AccessToken {
 //--------------------------------------
 // MARK: - Current Token
 //--------------------------------------
-
-extension AccessToken {
-	private static var _accessToken: AccessToken?
-	
-	public static var current: AccessToken? {
-		get {
-			
-			if(_accessToken == nil){
-				_accessToken = AccessToken.init(authorizationToken: "Basic undefined", expirationDate: Date.distantFuture)
-				return _accessToken
-			}else{
-				return _accessToken
-			}
-			
-		}
-		
-		set{
-			_accessToken = newValue
-		}
-	}
-}
+//
+//extension AccessToken {
+//	private static var _accessToken: AccessToken?
+//	
+//	public static var current: AccessToken? {
+//		get {
+//			if(_accessToken == nil){
+//				_accessToken = AccessToken.init(authorizationToken: "Bearer", expirationDate: Date.distantFuture)
+//				return _accessToken
+//			}else{
+//				return _accessToken
+//			}
+//		}
+//		
+//		set{
+//			_accessToken = newValue
+//		}
+//	}
+//}
 
