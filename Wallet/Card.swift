@@ -94,8 +94,6 @@ public struct Card {
 	
     public init?(fromDictionary json: Dictionary<String,Any>) {
 		
-		
-		
 		guard let id = json["id"] as? String,
 			let lastFourDigits = json["last_four_digits"] as? String,
 			let brand = json["brand"] as? String,
@@ -170,7 +168,9 @@ extension Card {
 									
 									if let card = Card(fromDictionary: cardDictionary) {
 										cards.append(card)
-										debugPrint(card.brand ?? "nao tem brand")
+									}
+									else {
+										debugPrint("nao conseguiu parsear card")
 									}
                         }
 								debugPrint(cards.count)
