@@ -16,7 +16,7 @@ public enum APIResources: String {
 open class WalletAPIClient: NSObject{
 	
 	// Default API Production URL
-	static public let kDefaultApiURL = "api.mundipagg.com/core/v1.0"
+	static public let kDefaultApiURL = "api.mundipagg.com/core/v1"
 	
 	
 	static private let kCustumersURL = "customers"
@@ -34,15 +34,11 @@ open class WalletAPIClient: NSObject{
 		
 		switch type {
 		case .ListCreditCardOrCreate:
-			return URL(string: "https://\(WalletConfiguration.sharedConfiguration.ApiURL)/\(WalletAPIClient.kCustumersURL)/\(WalletAPIClient.getCustomerId())/credit_cards")!
+			return URL(string: "https://\(WalletConfiguration.sharedConfiguration.ApiURL)/\(WalletAPIClient.kCustumersURL)/\(WalletAPIClient.getCustomerId())/cards")!
             
         case .DeleteCreditCard:
-            return URL(string: "https://\(WalletConfiguration.sharedConfiguration.ApiURL)/\(WalletAPIClient.kCustumersURL)/\(WalletAPIClient.getCustomerId())/credit_cards/\(WalletAPIClient.getCardId())")!
-		
+            return URL(string: "https://\(WalletConfiguration.sharedConfiguration.ApiURL)/\(WalletAPIClient.kCustumersURL)/\(WalletAPIClient.getCustomerId())/cards/\(WalletAPIClient.getCardId())")!
         }
-		
-		
-		
 	}
 	
 	

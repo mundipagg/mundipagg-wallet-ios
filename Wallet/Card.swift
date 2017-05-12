@@ -16,34 +16,32 @@ public typealias CardTypeDeleteCallback = (DeleteCardResponse?, WalletError?) ->
 
 public struct Card {
 	
-	// The card id
+	/// The card id
 	public let id: String
 	
-	// The Mundipagg MarkOne gateway key
+	/// The Mundipagg MarkOne gateway key
 	public let gatewayId: String?
 	
-	// The last card digits
+	/// The last card digits
 	public let lastFourDigits: String?
 	
-	// The card brand
+	/// The card brand
 	public let brand: CardBrand?
 	
-	// The Card Status
+	/// The Card Status
 	public let status: CardStatus?
 
-	// The card holder name
+	/// The card holder name
 	public let holderName: String?
 	
-	// The card created date
+	/// The card created date
 	public let createdAt: Date?
 	
-	// The card last update date
+	/// The card last update date
 	public let updatedAt: Date?
 	
-	// Card cilling address
+	/// Card cilling address
 	public let billingAddress: Address?
-	
-	
 	
 	public init?(id: String,
 	            gatewayId: String? = nil,
