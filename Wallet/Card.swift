@@ -166,11 +166,14 @@ extension Card {
                         let cardList = cardListDictionary as! [Dictionary<String,Any>]
 							
                         for cardDictionary in cardList {
+									debugPrint("cartao esta vazio: \(cardDictionary.isEmpty)")
 									
 									if let card = Card(fromDictionary: cardDictionary) {
 										cards.append(card)
+										debugPrint(card.brand ?? "nao tem brand")
 									}
                         }
+								debugPrint(cards.count)
                         completion(cards, nil)
                     }
                     else {
