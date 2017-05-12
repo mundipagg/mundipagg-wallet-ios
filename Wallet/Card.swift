@@ -98,9 +98,7 @@ public struct Card {
 			let lastFourDigits = json["last_four_digits"] as? String,
 			let brand = json["brand"] as? String,
 			let status = json["status"] as? String,
-			let holderName = json["holder_name"] as? String,
-			let createdAt = (json["created_at"] as? String)?.dateFromISO8601Format,
-			let updatedAt = (json["updated_at"] as? String)?.dateFromISO8601Format
+			let holderName = json["holder_name"] as? String
 		else {
 			return nil
 		}
@@ -109,6 +107,18 @@ public struct Card {
 			self.gatewayId = gatewayId
 		}else{
 			self.gatewayId = nil
+		}
+		
+		if let createdAt = (json["created_at"] as? String)?.dateFromISO8601Format {
+			self.createdAt = createdAt
+		}else{
+			self.createdAt = nil
+		}
+		
+		if let updatedAt = (json["updated_at"] as? String)?.dateFromISO8601Format {
+			self.updatedAt = updatedAt
+		}else{
+			self.updatedAt = nil
 		}
 		
 		// Optional billing address must be outside guard statement
@@ -124,8 +134,6 @@ public struct Card {
 		self.brand = CardBrand(rawValue: brand)
 		self.status = CardStatus(rawValue: status)
 		self.holderName = holderName
-		self.createdAt = createdAt
-		self.updatedAt = updatedAt
 		self.billingAddress = Address()
     }
     
