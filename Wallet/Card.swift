@@ -51,7 +51,8 @@ public struct Card {
 	            holderName: String? = nil,
 	            createdAt: Date? = nil,
 	            updatedAt: Date? = nil,
-	            billingAddress: Address? = nil){
+	            billingAddress: Address? = nil,
+	            options: CardOptions? = nil) {
 		self.id = id
 		self.gatewayId = gatewayId
 		self.lastFourDigits = lastFourDigits
@@ -62,35 +63,6 @@ public struct Card {
 		self.updatedAt = updatedAt
 		self.billingAddress = billingAddress
 	}
-	
-	/*public init?(fromJSON jsonData: Data){
-		
-		
-		guard let json = (try? JSONSerialization.jsonObject(with: jsonData, options: [])) as? [String: Any],
-			let id = json["id"] as? String,
-			let gatewayId = json["gateway_id"] as? String,
-			let lastFourDigits = json["lastFourDigits"] as? String,
-			let brand = json["brand"] as? String,
-			let status = json["status"] as? String,
-			let holderName = json["holderName"] as? String,
-			let createdAt = (json["createdAt"] as? String)?.dateFromISO8601Format,
-			let updatedAt = (json["updatedAt"] as? String)?.dateFromISO8601Format,
-			let billingAddress = json["billingAddress"] as? AnyObject
-
-			else {
-				return nil
-		}
-		
-		self.id = id
-		self.gatewayId = gatewayId
-		self.lastFourDigits = lastFourDigits
-		self.brand = .Visa
-		self.status = .active
-		self.holderName = holderName
-		self.createdAt = createdAt
-		self.updatedAt = updatedAt
-		self.billingAddress = Address()
-	}*/
 	
     public init?(fromDictionary json: Dictionary<String,Any>) {
 		
@@ -105,31 +77,23 @@ public struct Card {
 		
 		if let gatewayId = json["gateway_id"] as? String {
 			self.gatewayId = gatewayId
-		}else{
+		} else {
 			self.gatewayId = nil
 		}
 		
 		if let createdAt = (json["created_at"] as? String)?.dateFromISO8601Format {
 			self.createdAt = createdAt
-		}else{
+		} else {
 			self.createdAt = nil
 		}
 		
 		if let updatedAt = (json["updated_at"] as? String)?.dateFromISO8601Format {
 			self.updatedAt = updatedAt
-		}else{
+		} else {
 			self.updatedAt = nil
 		}
 		
-		// Optional billing address must be outside guard statement
-		/*if let billingAddress = json["billing_address"] as? AnyObject {
-			print("Good Billing Address", billingAddress)
-		}else{
-			print("Bad Billing Address")
-		}*/
-		
 		self.id = id
-		
 		self.lastFourDigits = lastFourDigits
 		self.brand = CardBrand(rawValue: brand)
 		self.status = CardStatus(rawValue: status)
@@ -204,34 +168,20 @@ extension Card {
 		
 		do {
 			let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
-			
 			let request = CardRequest(withURL: WalletAPIClient.getResourceURL(type: APIResources.ListCreditCardOrCreate), httpMethod: WalletHTTPMethod.POST, payload: jsonData)
 			
 			request.sendRequest { (jsonDictionary, error) in
 				
 				if let error = error {
-					
 					let requestError = WalletError(code: error.code, description: error.localizedDescription)
-					
-					/*if let data = jsonDictionary.data{
-						if let json = try? JSONSerialization.jsonObject(with: data) as! [String:Any] {
-							//errorString = json["error"]
-							
-							completion(nil, json)
-							return
-						}
-					}*/
-					
 					completion(nil, requestError)
-				}
-				else {
+				} else {
 					
 					if let card = CreateCardResponse(fromDictionary: jsonDictionary! as NSDictionary) {
 						completion(card, nil)
-					}else{
+					} else {
 						completion(nil, WalletError.APIResponseError)
 					}
-						
             }
 			}
 		}
@@ -239,8 +189,6 @@ extension Card {
 			let caughtError = parseError as NSError
 			completion(nil, WalletError(code: caughtError.code, description: caughtError.localizedDescription))
 		}
-			
-			
 	}
 }
 

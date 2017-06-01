@@ -11,18 +11,22 @@ import Foundation
 
 class CreateCardRequest : NSObject, NSCoding{
 	
-	var billingAddress : BillingAddres!
-	var cvv : Int!
-	var expMonth : Int!
-	var expYear : Int!
-	var holderName : String!
-	var number : Int!
+	var billingAddress: BillingAddres!
+	var cvv: Int!
+	var expMonth: Int!
+	var expYear: Int!
+	var holderName: String!
+	var number: Int!
+	var options: CardOptions?
 	
 	
 	
-	init?(number : Int, expMonth : Int, expYear : Int, cvv : Int, holderName : String, billingAddress : BillingAddres?){
-		if billingAddress != nil{
+	init?(number : Int, expMonth : Int, expYear : Int, cvv : Int, holderName : String, billingAddress : BillingAddres?, options: CardOptions?){
+		if billingAddress != nil {
 			self.billingAddress = billingAddress
+		}
+		if let options = options {
+			self.options = options
 		}
 		self.cvv = cvv
 		self.expMonth = expMonth
@@ -36,8 +40,11 @@ class CreateCardRequest : NSObject, NSCoding{
 	* Instantiate the instance using the passed dictionary values to set the properties values
 	*/
 	init(fromDictionary dictionary: NSDictionary){
-		if let billingAddressData = dictionary["billing_address"] as? NSDictionary{
+		if let billingAddressData = dictionary["billing_address"] as? NSDictionary {
 			billingAddress = BillingAddres(fromDictionary: billingAddressData)
+		}
+		if let optionsJson = dictionary["options"] as? JSON {
+			options = CardOptions(json: optionsJson)
 		}
 		cvv = dictionary["cvv"] as? Int
 		expMonth = dictionary["exp_month"] as? Int
@@ -55,6 +62,9 @@ class CreateCardRequest : NSObject, NSCoding{
 		
 		if billingAddress != nil{
 			dictionary["billing_address"] = billingAddress.toDictionary()
+		}
+		if options != nil{
+			dictionary["options"] = options?.json
 		}
 		if cvv != nil{
 			dictionary["cvv"] = cvv
@@ -80,13 +90,13 @@ class CreateCardRequest : NSObject, NSCoding{
 	*/
 	@objc required init(coder aDecoder: NSCoder)
 	{
+		options = aDecoder.decodeObject(forKey: "options") as? CardOptions
 		billingAddress = aDecoder.decodeObject(forKey: "billing_address") as? BillingAddres
 		cvv = aDecoder.decodeObject(forKey: "cvv") as? Int
 		expMonth = aDecoder.decodeObject(forKey: "exp_month") as? Int
 		expYear = aDecoder.decodeObject(forKey: "exp_year") as? Int
 		holderName = aDecoder.decodeObject(forKey: "holder_name") as? String
 		number = aDecoder.decodeObject(forKey: "number") as? Int
-		
 	}
 	
 	/**
@@ -95,6 +105,9 @@ class CreateCardRequest : NSObject, NSCoding{
 	*/
 	@objc func encode(with aCoder: NSCoder)
 	{
+		if options != nil{
+			aCoder.encode(options, forKey: "options")
+		}
 		if billingAddress != nil{
 			aCoder.encode(billingAddress, forKey: "billing_address")
 		}
@@ -115,6 +128,4 @@ class CreateCardRequest : NSObject, NSCoding{
 		}
 		
 	}
-
-	
 }
