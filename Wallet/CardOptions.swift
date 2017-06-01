@@ -18,7 +18,7 @@ public struct CardOptions {
 		return json
 	}
 	
-	init(verifyCard: Bool) {
+	public init(verifyCard: Bool) {
 		self.verifyCard = verifyCard
 	}
 	
