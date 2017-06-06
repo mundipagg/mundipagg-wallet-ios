@@ -20,17 +20,20 @@ public class WalletError: NSError {
 	public static let EmptyCustomerIDError = WalletError(code: 2, description: "Customer Id can't be nil")
 	public static let ParseDeleteResponseError = WalletError(code: 3, description: "Erro ao parsear resposta do deleteCard")
 	public static let NotFoundError = WalletError(code: 404, description: "Objeto nao encontrado")
+	public static let CardRefused = WalletError(code: 412 , description: "Cartão recusado")
 	
 	class func errorForResponse(_ response: HTTPURLResponse, data: Data) -> WalletError {
 		var description = ""
+		
 		if let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any], let errorDescription = json["message"] as? String {
 			description = errorDescription
 		} else if response.statusCode == 401 {
 			description = "Unauthorized"
 		} else if response.statusCode == 404 {
 			return WalletError.NotFoundError
-		}
-		else {
+		} else if response.statusCode == 412 {
+			return WalletError.CardRefused
+		} else {
 			return WalletError.APIResponseError
 		}
         
