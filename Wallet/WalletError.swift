@@ -31,7 +31,7 @@ public class WalletError: NSError {
 			description = "Unauthorized"
 		} else if response.statusCode == 404 {
 			return WalletError.NotFoundError
-		} else if response.statusCode == 412 {
+		} else if response.statusCode == 412 || response.statusCode == 422 {
 			return WalletError.CardRefused
 		} else {
 			return WalletError.APIResponseError
