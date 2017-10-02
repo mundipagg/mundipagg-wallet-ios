@@ -21,5 +21,6 @@ public enum CardBrand: String {
 	case Aura = "Aura"
 	case DinersClub = "Diners"
 	case Sodexo = "Sodexo"
+    case Hipercard = "Hipercard"
 	case Unknown = ""
 }
