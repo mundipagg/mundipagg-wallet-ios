@@ -30,7 +30,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.id = id
 		}
 		else {
-			print("id veio nulo")
 			self.id = nil
 		}
 		
@@ -38,7 +37,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.gatewayId = gatewayId
 		}
 		else {
-			print("gatewayId veio nulo")
 			self.gatewayId = nil
 		}
 		
@@ -46,7 +44,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.lastFourDigits = lastFourDigits
 		}
 		else {
-			print("lastFourDigits veio nulo")
 			self.lastFourDigits = nil
 		}
 		
@@ -54,7 +51,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.brand = brand
 		}
 		else {
-			print("brand veio nulo")
 			self.brand = nil
 		}
 		
@@ -62,7 +58,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.holderName = holderName
 		}
 		else {
-			print("holderName veio nulo")
 			self.holderName = nil
 		}
 		
@@ -70,7 +65,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.expirateMonth = expirateMonth
 		}
 		else {
-			print("expirateMonth veio nulo")
 			self.expirateMonth = nil
 		}
 		
@@ -78,7 +72,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.expirateYear = expirateYear
 		}
 		else {
-			print("expirateYear veio nulo")
 			self.expirateYear = nil
 		}
 		
@@ -86,7 +79,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.status = status
 		}
 		else {
-			print("status veio nulo")
 			self.status = nil
 		}
 		
@@ -94,7 +86,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.createdAt = createdAt
 		}
 		else {
-			print("createdAt veio nulo")
 			self.createdAt = nil
 		}
 		
@@ -102,7 +93,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.updatedAt = updatedAt
 		}
 		else {
-			print("updatedAt veio nulo")
 			self.updatedAt = nil
 		}
 		
@@ -110,7 +100,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.deletedAt = deletedAt
 		}
 		else {
-			print("deletedAt veio nulo")
 			self.deletedAt = nil
 		}
 		
@@ -118,7 +107,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.billingAddress = billingAddress
 		}
 		else {
-			print("billingAddress veio nulo")
 			self.billingAddress = nil
 		}
 		
@@ -126,7 +114,6 @@ public struct DeleteCardResponse : ModelResponseProtocol {
 			self.customer = Customer(fromDictionary: customer)
 		}
 		else {
-			print("customer veio nulo")
 			self.customer = nil
 		}
 	}
