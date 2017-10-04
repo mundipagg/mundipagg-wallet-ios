@@ -17,15 +17,7 @@ open class WalletAPIClient: NSObject{
 	
 	// Default API Production URL
 	static public let kDefaultApiURL = "api.mundipagg.com/core/v1"
-	
-	
 	static private let kCustumersURL = "customers"
-	
-    
-	//MARK: Header constants
-	//static private let kAuthorizationValue = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
-	
-	
 	private static var customerId: String? = nil
     private static var cardId : String = ""
 	
