@@ -43,6 +43,9 @@ public struct Card {
 	/// Card cilling address
 	public let billingAddress: Address?
 	
+	/// The CVV encrypted
+	public let encryptedCvv: String?
+	
 	public init?(id: String,
 	            gatewayId: String? = nil,
 	            lastFourDigits: String? = nil,
@@ -52,7 +55,8 @@ public struct Card {
 	            createdAt: Date? = nil,
 	            updatedAt: Date? = nil,
 	            billingAddress: Address? = nil,
-	            options: CardOptions? = nil) {
+	            options: CardOptions? = nil,
+					encryptedCvv: String? = nil) {
 		self.id = id
 		self.gatewayId = gatewayId
 		self.lastFourDigits = lastFourDigits
@@ -62,6 +66,7 @@ public struct Card {
 		self.createdAt = createdAt
 		self.updatedAt = updatedAt
 		self.billingAddress = billingAddress
+		self.encryptedCvv = encryptedCvv
 	}
 	
     public init?(fromDictionary json: Dictionary<String,Any>) {
@@ -92,6 +97,9 @@ public struct Card {
 		} else {
 			self.updatedAt = nil
 		}
+		
+		let encryptedCvv = json["encrypted_cvv"] as? String
+		self.encryptedCvv = encryptedCvv
 		
 		self.id = id
 		self.lastFourDigits = lastFourDigits
