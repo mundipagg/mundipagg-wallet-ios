@@ -44,7 +44,7 @@ public struct Card {
 	public let billingAddress: Address?
 	
 	/// The CVV encrypted
-	public let encryptedCvv: String?
+	public var encryptedCvv: String?
 	
 	public init?(id: String,
 	            gatewayId: String? = nil,
