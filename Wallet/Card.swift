@@ -144,16 +144,10 @@ extension Card {
                         let cardList = cardListDictionary as! [Dictionary<String,Any>]
 							
                         for cardDictionary in cardList {
-									debugPrint("cartao esta vazio: \(cardDictionary.isEmpty)")
-									
 									if let card = Card(fromDictionary: cardDictionary) {
 										cards.append(card)
 									}
-									else {
-										debugPrint("nao conseguiu parsear card")
-									}
                         }
-								debugPrint(cards.count)
                         completion(cards, nil)
                     }
                     else {

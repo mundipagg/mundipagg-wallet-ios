@@ -53,7 +53,7 @@ public class WalletError: NSError {
 		
 		super.init(domain: WalletErrorDomain, code: code, userInfo: userInfo)
 		
-		Logger.logError(self)
+//        Logger.logError(self)
 	}
 	
 	/// Not implemented, do not use.

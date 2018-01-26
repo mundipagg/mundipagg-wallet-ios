@@ -43,7 +43,7 @@ class WalletRequestManager: NSObject {
 			
             if let error = error {
 					
-					Logger.logError(error as NSError)
+//                    Logger.logError(error as NSError)
 					
 					let errorCode = (error as NSError).code
 					response(nil, WalletError(code: errorCode, description: error.localizedDescription))
@@ -61,9 +61,7 @@ class WalletRequestManager: NSObject {
                         do {
                             let jsonDictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String:Any]
 									
-									debugPrint(jsonDictionary)
-									
-									response(jsonDictionary, nil)
+                                response(jsonDictionary, nil)
                         }
                         catch let error {
                             let caughtError = error as NSError
@@ -92,14 +90,14 @@ class WalletRequestManager: NSObject {
 	
 	private func requestCompletionHandler(_ data: Data?, response: URLResponse?, error: Error?) {
 		guard let response = response as? HTTPURLResponse, let data = data, error == nil else {
-			if let error = error {
-				Logger.logError(error as NSError)
-			}
+//            if let error = error {
+//                Logger.logError(error as NSError)
+//            }
 			self.performCallback(error as NSError?)
 			return
 		}
 		
-		Logger.logResponse(response, data: data)
+//        Logger.logResponse(response, data: data)
 		
 		//If the status code isn't 2XX
 		if response.statusCode / 100 != 2 {
